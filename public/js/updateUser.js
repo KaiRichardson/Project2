@@ -92,13 +92,3 @@ $("#userDelete").on("click", function(event) {
     window.location = "/";
   });
 });
-
-//update ajax call
-/* function updateUser(id) {
-  $.ajax({
-    url: "api/students/" + id,
-    type: "PUT"
-  }).then(getUser);
-}
-
-updateUser(thing); */
