@@ -12,6 +12,24 @@ const port = process.env.PORT || 3000;
 // Serve static files
 app.use(express.static(__dirname + '/public'));
 
+// Add session support
+app.use(session({  
+  secret: process.env.SESSION_SECRET || 'default_session_secret',
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.initialize());  
+app.use(passport.session());  
+// This will tell passport what to put into client-side cookies
+// We are just saving the entire user object for this tutorial
+// Normally, we'd usually want to save just a user_id
+passport.serializeUser((user, done) => {  
+  done(null, user);
+});
+passport.deserializeUser((userDataFromCookie, done) => {  
+  done(null, userDataFromCookie);
+});
+
 // Set up passport strategy
 passport.use(new GoogleStrategy(  
   {
