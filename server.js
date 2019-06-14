@@ -55,7 +55,7 @@ app.get("/", function (req, res) {
 app.get('/auth/google/callback',  
   passport.authenticate('google', { failureRedirect: '/login.html', session: false }),
   (req, res) => {
-    console.log(`wooo we authenticated, here is our user object: ${req.user}`);
+    console.log('wooo we authenticated, here is our user object: '+ req.user);
     // Send the user data back to the browser for now
     res.json(req.user);
   }
