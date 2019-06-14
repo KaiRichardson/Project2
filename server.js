@@ -1,45 +1,20 @@
-require("dotenv").config();
-var express = require("express");
+// This file should be named `server.js`
 
+const express = require('express');
 
-var db = require("./models");
+const app = express();  
+const port = process.env.PORT || 3000;
 
-var app = express();
-var PORT = process.env.PORT || 3000;
+// Serve static files
+app.use(express.static(__dirname + '/public'));
 
-// Middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(express.static("public"));
-
-app.use(express.static(__dirname + "/public"));
-
-// Routes
-require("./routes/student-api-routes")(app);
-require("./routes/html-routes")(app);
-
-// START GOOGS STUFF ----------------------------------------------------------------------/
-require("./config/passport-setup.js")(app);
-require("./routes/googleRoutes/auth-routes.js")(app);
-
-// END GOOGLE STUFF -------------------------------------------------------------------------------/
-var syncOptions = { force: false };
-
-// If running a test, set syncOptions.force to true
-// clearing the `testdb`
-if (process.env.NODE_ENV === "test") {
-  syncOptions.force = true;
-}
-
-// Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync(syncOptions).then(function() {
-  app.listen(PORT, function() {
-    console.log(
-      "==> Listening on port %s. Visit http://localhost:%s/ in your browser.",
-      PORT,
-      PORT
-    );
-  });
+// Serve a test API endpoint
+// This is just to test your API -- we're gonna delete this endpoint later
+app.get('/test', (req, res) => {  
+  res.send('Your api is working!');
 });
 
-module.exports = app;
+// Start server
+const server = app.listen(port, function() {  
+  console.log('Server listening on port ' + port);
+});
