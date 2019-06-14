@@ -30,6 +30,19 @@ app.get('/test', (req, res) => {
   res.send('Your api is working!');
 });
 
+// google middleware
+app.get('/auth/google', passport.authenticate('google'));  
+
+// This is where Google sends users once they authenticate with Google
+// Make sure this endpoint matches the "callbackURL" from step 4.2 and the "authorized redirect URI" from Step 3
+app.get('/auth/google/callback',  
+  passport.authenticate('google', { failureRedirect: '/', session: false }),
+  (req, res) => {
+    console.log('wooo we authenticated, here is our user object:', req.user);
+    res.json(req.user);
+  }
+);
+
 // Start server
 const server = app.listen(port, function() {  
   console.log('Server listening on port ' + port);
