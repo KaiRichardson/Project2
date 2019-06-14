@@ -1,5 +1,3 @@
-// server.js
-
 require('dotenv').config();
 const express = require('express');  
 var session = require("express-session");
@@ -31,6 +29,17 @@ passport.deserializeUser((userDataFromCookie, done) => {
   done(null, userDataFromCookie);
 });
 
+// Checks if a user is logged in
+const accessProtectionMiddleware = (req, res, next) => {  
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.status(403).json({
+      message: 'must be logged in to continue',
+    });
+  }
+};
+
 // Set up passport strategy
 passport.use(new GoogleStrategy(  
   {
@@ -55,11 +64,19 @@ app.get("/", function (req, res) {
 app.get('/auth/google/callback',  
   passport.authenticate('google', { failureRedirect: '/login.html', session: false }),
   (req, res) => {
-    console.log('wooo we authenticated, here is our user object: '+ req.user);
+    console.log(`wooo we authenticated, here is our user object: ${req.user}`);
     // Send the user data back to the browser for now
     res.json(req.user);
   }
 );
+
+// A secret endpoint accessible only to logged-in users
+app.get('/protected', accessProtectionMiddleware, (req, res) => {  
+  res.json({
+    message: 'You have accessed the protected endpoint!',
+    yourUserInfo: req.user,
+  });
+});
 
 // Start server
 const server = app.listen(port, function() {  
