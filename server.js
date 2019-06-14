@@ -15,30 +15,24 @@ passport.use(new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_ID,
     clientSecret: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_SECRET,
-    callbackURL: 'https://frozen-spire-30925.herokuapp.com/auth/google/callback',
+    callbackURL: 'https://frozen-spire-30925.herokuapp.com//auth/google/callback',
     scope: ['email'],
   },
-  // This is a "verify" function required by all Passport strategies
   (accessToken, refreshToken, profile, cb) => {
     console.log('Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user:', profile);
     return cb(null, profile);
   },
 ));
 
-// Serve a test API endpoint
-app.get('/test', (req, res) => {  
-  res.send('Your api is working!');
-});
+// Create API endpoints
 
-// google middleware
-app.get('/auth/google', passport.authenticate('google'));  
-
-// This is where Google sends users once they authenticate with Google
-// Make sure this endpoint matches the "callbackURL" from step 4.2 and the "authorized redirect URI" from Step 3
+// This is where users point their browsers in order to get logged in
+// This is also where Google sends back information to our app once a user authenticates with Google
 app.get('/auth/google/callback',  
-  passport.authenticate('google', { failureRedirect: '/', session: false }),
+  passport.authenticate('google', { failureRedirect: '/login.html', session: false }),
   (req, res) => {
     console.log('wooo we authenticated, here is our user object:', req.user);
+    // Send the user data back to the browser for now
     res.json(req.user);
   }
 );
