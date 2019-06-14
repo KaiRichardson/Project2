@@ -1,14 +1,15 @@
 // server.js
 
+require('dotenv').config();
 const express = require('express');  
 const passport = require('passport');  
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const app = express();  
-const port = process.env.PORT || 8050;
+const port = process.env.PORT || 3000;
 
 // Serve static files
-app.use(express.static(__dirname + '/public/ligin.html'));
+app.use(express.static(__dirname + '/public/login.html'));
 
 // Set up passport strategy
 passport.use(new GoogleStrategy(  
