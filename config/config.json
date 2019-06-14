@@ -1,11 +1,4 @@
 {
-  "local": {
-    "username": "root",
-    "password": null,
-    "database": "student_db",
-    "host": "localhost",
-    "dialect": "mysql"
-  },
   "development": {
     "username": "root",
     "password": null,
