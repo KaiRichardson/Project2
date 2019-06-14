@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 8050;
 
 // Serve static files
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public/ligin.html'));
 
 // Set up passport strategy
 passport.use(new GoogleStrategy(  
