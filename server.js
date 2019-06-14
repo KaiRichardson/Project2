@@ -1,9 +1,12 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const session = require("express-session");
 const path = require("path");
+
+// local
+var db = require("./models");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,13 +25,17 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Add passport support
 passport.serializeUser((user, done) => {
   done(null, user);
 });
-
 passport.deserializeUser((userDataFromCookie, done) => {
   done(null, userDataFromCookie);
 });
+
+// Routes
+require("./routes/student-api-routes")(app);
+require("./routes/html-routes")(app);
 
 // Checks if a user is logged in
 const accessProtectionMiddleware = (req, res, next) => {
@@ -49,13 +56,10 @@ passport.use(
       clientSecret: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_SECRET,
       callbackURL:
         "https://frozen-spire-30925.herokuapp.com/auth/google/callback",
-      scope: ["email"]
+      scope: ["profile"]
     },
     (accessToken, refreshToken, profile, cb) => {
-      console.log(
-        "Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user:",
-        profile
-      );
+      console.log(`Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user ${profile}`);
       return cb(null, profile);
     }
   )
@@ -72,13 +76,13 @@ app.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/", session: true }),
   (req, res) => {
-    console.log("wooo we authenticated, here is our user object:", req.user);
+    console.log(`wooo we authenticated, here is our user object: ${req.user}`);
     // res.json(req.user);
-    res.redirect("/");
+    res.redirect("/dashboard.html");
   }
 );
 
-app.get("/protected", accessProtectionMiddleware, (req, res) => {
+app.get("/dashboard", accessProtectionMiddleware, (req, res) => {
   res.json({
     message: "You have accessed the protected endpoint!",
     yourUserInfo: req.user
@@ -87,5 +91,5 @@ app.get("/protected", accessProtectionMiddleware, (req, res) => {
 
 // Start server
 const server = app.listen(port, function() {
-  console.log("Server listening on port " + port);
+  console.log(`Server listening on port ${port}`);
 });
