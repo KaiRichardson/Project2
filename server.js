@@ -78,7 +78,7 @@ app.get(
   (req, res) => {
     console.log(`wooo we authenticated, here is our user object: ${req.user}`);
     // res.json(req.user);
-    res.redirect("/dashboard.html");
+    res.redirect("/dashboard");
   }
 );
 
