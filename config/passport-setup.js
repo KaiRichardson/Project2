@@ -2,6 +2,7 @@ var passport = require("passport");
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
 var session = require("express-session");
 
+//
 module.exports = function(app) {
   // Add session support
   app.use(
