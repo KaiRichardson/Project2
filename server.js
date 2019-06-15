@@ -22,22 +22,22 @@ var accessProtectionMiddleware = (req, res, next) => {
   }
 };
 
-require("./routes/html-routes")(app);
+// Routs
+// require("./routes/html-routes")(app);
 
-
-// Google routs
+// Google Routs
 require("./config/passport-setup.js")(app);
 require("./routes/googleRoutes/auth-routes.js")(app);
 
 
 // // Load index page
-// app.get("/", function(req, res) {
-//   res.sendFile(path.join(__dirname, "./public/login.html"));
-// });
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "./public/login.html"));
+});
 
-// app.get("/dashboard", accessProtectionMiddleware, (req, res) => {
-//   res.sendFile(path.join(__dirname, "./public/dashboard.html"));
-// });
+app.get("/dashboard", accessProtectionMiddleware, (req, res) => {
+  res.sendFile(path.join(__dirname, "./public/dashboard.html"));
+});
 
 // Start server
 var server = app.listen(port, function() {
