@@ -14,8 +14,10 @@ if (config.use_env_variable) {
     config.database,
     config.username,
     process.env.MYSQLPASS,
-    config
-  );
+    {
+      host: 'localhost',
+      dialect: "mysql"
+    });
 }
 
 fs.readdirSync(__dirname)
