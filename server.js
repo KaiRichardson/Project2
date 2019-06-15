@@ -38,7 +38,7 @@ require("./routes/student-api-routes")(app);
 require("./routes/html-routes")(app);
 
 // Checks if a user is logged in
-module.exports = accessProtectionMiddleware = (req, res, next) => {
+const accessProtectionMiddleware = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
   } else {
@@ -79,6 +79,10 @@ app.get(
     res.redirect("/");
   }
 );
+
+app.get("/dashboard", accessProtectionMiddleware, function(req, res) {
+  res.sendFile(path.join(__dirname, "./public/dashboard.html"));
+});
 
 // Start server
 const server = app.listen(port, function() {
