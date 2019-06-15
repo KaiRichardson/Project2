@@ -7,9 +7,12 @@ var config = require(__dirname + "/../config/config.json")[env];
 require("dotenv").config();
 var db = {};
 
+
 if (config.use_env_variable) {
+  // use for heroku
   var sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {
+  // use for local
   var sequelize = new Sequelize(
     config.database,
     config.username,
