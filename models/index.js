@@ -9,18 +9,23 @@ const config = require(path.join(__dirname, "..", "config", "config.json"))[
   env
 ];
 const db = {};
-if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable]);
-  console.log("-------------use_env_variable--------");
-} else {
-  console.log("-------------use_Sequelize_variable--------");
-  var sequelize = new Sequelize(
-    config.database,
-    config.username,
-    process.env.MYSQLPASS,
-    config
-  );
-}
+// if (config.use_env_variable) {
+//   var sequelize = new Sequelize(process.env[config.use_env_variable]);
+//   console.log("-------------use_env_variable--------");
+// } else {
+//   console.log("-------------use_Sequelize_variable--------");
+//   var sequelize = new Sequelize(
+//     config.database,
+//     config.username,
+//     process.env.MYSQLPASS,
+//     config
+//   );
+// }
+
+const sequelize = new Sequelize('student_db', 'root', 'yourRootPassword', {
+  host: 'localhost',
+  dialect: 'mysql'
+});
 
 fs.readdirSync(__dirname)
   .filter(function(file) {
