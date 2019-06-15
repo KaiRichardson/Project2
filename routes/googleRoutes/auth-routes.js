@@ -21,8 +21,8 @@ module.exports = function(app) {
     (req, res) => {
       var studentGoogObj = req.user._json;
       // console.log("wooo we authenticated, here is our user object:", req.user);
-      res.json(req.user);
-      console.log(req.user);
+      // res.json(req.user);
+      console.log(req.user._json);
 
       //look up in db user google = req.user._json.sub
       db.Students.findOne({
@@ -38,7 +38,7 @@ module.exports = function(app) {
           res.redirect("https://frozen-spire-30925.herokuapp.com/newUser");
         }
         console.log(dbStudent);
-        res.json(dbStudent);
+        // res.json(dbStudent);
       });
   
       
