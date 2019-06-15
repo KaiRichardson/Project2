@@ -1,18 +1,20 @@
 require("dotenv").config();
-const express = require("express");
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const session = require("express-session");
-const path = require("path");
+var express = require("express");
+var passport = require("passport");
+var GoogleStrategy = require("passport-google-oauth20").Strategy;
+var session = require("express-session");
+var path = require("path");
 
 // local
 var db = require("./models");
 
-const app = express();
-const port = process.env.PORT || 3000;
+var app = express();
+var port = process.env.PORT || 3000;
 
-// Serve static files
-app.use(express.static(__dirname + "/public"));
+// Middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.static("public"));
 
 // Add session support
 app.use(
@@ -23,49 +25,21 @@ app.use(
   })
 );
 
-// Add passport support
-app.use(passport.initialize());
-app.use(passport.session());
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-passport.deserializeUser((userDataFromCookie, done) => {
-  done(null, userDataFromCookie);
-});
-
 // Routes
 require("./routes/student-api-routes")(app);
 require("./routes/html-routes")(app);
 
-// Checks if a user is logged in
-const accessProtectionMiddleware = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(403).json({
-      message: "must be logged in to continue"
-    });
-  }
-};
+// Google routs
+require("./config/passport-setup.js")(app);
+require("./routes/googleRoutes/auth-routes.js")(app);
 
-// Set up passport strategy
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_SECRET,
-      callbackURL:
-        "https://frozen-spire-30925.herokuapp.com/auth/google/callback",
-      scope: ["email"]
-    },
-    (accessToken, refreshToken, profile, cb) => {
-      console.log(
-        `Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user ${profile}`
-      );
-      return cb(null, profile);
-    }
-  )
-);
+var syncOptions = { force: false };
+
+// If running a test, set syncOptions.force to true
+// clearing the `testdb`
+if (process.env.NODE_ENV === "test") {
+  syncOptions.force = true;
+}
 
 // Create API endpoints
 // This is where users point their browsers in order to get logged in
@@ -80,11 +54,13 @@ app.get(
   }
 );
 
-app.get("/dashboard", accessProtectionMiddleware, function(req, res) {
-  res.sendFile(path.join(__dirname, "./public/dashboard.html"));
+// Starting the server, syncing our models ------------------------------------/
+db.sequelize.sync(syncOptions).then(function() {
+  app.listen(port, function() {
+    console.log(
+      `==> Listening on port ${port}. Visit http://localhost:${port}/ in your browser.`
+    );
+  });
 });
 
-// Start server
-const server = app.listen(port, function() {
-  console.log(`Server listening on port ${port}`);
-});
+module.exports = app;
