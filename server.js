@@ -22,33 +22,22 @@ var accessProtectionMiddleware = (req, res, next) => {
   }
 };
 
+require("./routes/html-routes")(app);
+
+
 // Google routs
 require("./config/passport-setup.js")(app);
 require("./routes/googleRoutes/auth-routes.js")(app);
 
 
-// Create API endpoints
+// // Load index page
+// app.get("/", function(req, res) {
+//   res.sendFile(path.join(__dirname, "./public/login.html"));
+// });
 
-// This is where users point their browsers in order to get logged in
-// This is also where Google sends back information to our app once a user authenticates with Google
-// app.get(
-//   "/auth/google/callback",
-//   passport.authenticate("google", { failureRedirect: "/", session: true }),
-//   (req, res) => {
-//     console.log("wooo we authenticated, here is our user object:", req.user);
-//     // res.json(req.user);
-//     res.redirect("https://frozen-spire-30925.herokuapp.com/dashboard");
-//   }
-// );
-
-// Load index page
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "./public/login.html"));
-});
-
-app.get("/dashboard", accessProtectionMiddleware, (req, res) => {
-  res.sendFile(path.join(__dirname, "./public/dashboard.html"));
-});
+// app.get("/dashboard", accessProtectionMiddleware, (req, res) => {
+//   res.sendFile(path.join(__dirname, "./public/dashboard.html"));
+// });
 
 // Start server
 var server = app.listen(port, function() {
