@@ -19,7 +19,9 @@ module.exports = function(app) {
     (req, res) => {
       var studentGoogObj = req.user._json;
       // console.log("wooo we authenticated, here is our user object:", req.user);
-      res.json(req.user._json);
+      // res.json(req.user._json);
+      console.log(req.user);
+      
 // if (condition) {
   
 // } else {
