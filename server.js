@@ -1,5 +1,5 @@
 require("dotenv").config();
-var path = require("path");
+// var path = require("path");
 var express = require("express");
 
 var db = require("./models");
@@ -8,14 +8,15 @@ var app = express();
 var port = process.env.PORT || 8050;
 
 // Serve static files
-app.use(express.static(__dirname + "/public"));
-
-// Routs
-require("./routes/html-routes")(app);
+app.use(express.static("public"));
 
 // Google Routs
 require("./config/passport-setup.js")(app);
 require("./routes/googleRoutes/auth-routes.js")(app);
+
+// Routes
+// require("./routes/student-api-routes.js")(app);
+require("./routes/html-routes.js")(app);
 
 // Checks if a user is logged in
 // var accessProtectionMiddleware = (req, res, next) => {
@@ -30,6 +31,7 @@ require("./routes/googleRoutes/auth-routes.js")(app);
 
 // Load index page
 // app.get("/", function(req, res) {
+// console.log("server '/'");
 //   res.sendFile(path.join(__dirname, "./public/login.html"));
 // });
 

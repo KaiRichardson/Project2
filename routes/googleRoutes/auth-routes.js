@@ -1,11 +1,12 @@
 var passport = require("passport");
+console.log("google auth routes");
 
 module.exports = function(app) {
   app.get("/auth/logout", function(req, res) {
     //handle with passport
     res.send("logging out");
   });
-
+  
   // This is where users point their browsers in order to get logged in
   // This is also where Google sends back information to our app once a user authenticates with Google
   app.get(

@@ -4,16 +4,20 @@ var path = require("path");
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
+    console.log("i hit '/'");
+    // console.log(path.join(__dirname, "../public/login.html"));
+    
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
-  // new user route loads user creation page
+  // // new user route loads user creation page
   app.get("/newuser", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/newUser.html"));
   });
   
   // dashboard route loads user info page
   app.get("/dashboard", function(req, res) {
+    console.log("i hit 'dashboard'");
     res.sendFile(path.join(__dirname, "../public/dashboard.html"));
   });
   
@@ -24,6 +28,6 @@ module.exports = function(app) {
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
-    res.status("404");
+    res.sendStatus("404");
   });
 };
