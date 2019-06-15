@@ -11,7 +11,7 @@ var port = process.env.PORT || 8050;
 app.use(express.static(__dirname + "/public"));
 
 // Routs
-// require("./routes/html-routes")(app);
+require("./routes/html-routes")(app);
 
 // Google Routs
 require("./config/passport-setup.js")(app);
