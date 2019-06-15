@@ -1,6 +1,9 @@
 // Add event listeners to the submit and delete buttons
+var studentGoogObj = require("../../routes/googleRoutes/auth-routes.js");
+console.log(studentGoogObj);
+
 $submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick); */
+$exampleList.on("click", ".delete", handleDeleteBtnClick); 
 
 $("#submit").on("click", function(event) {
   event.preventDefault();
