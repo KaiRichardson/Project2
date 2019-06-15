@@ -1,11 +1,6 @@
 /* eslint-disable camelcase */
 module.exports = function(sequelize, DataTypes) {
   var CipTable = sequelize.define("CipTable", {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
     cip_code: {
       type: DataTypes.DECIMAL(6, 4),
       allowNull: false
