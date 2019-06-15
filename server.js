@@ -47,7 +47,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_ID,
       clientSecret: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_SECRET,
-      callbackURL: 'https://frozen-spire-30925.herokuapp.com/auth/google/callback',
+      callbackURL: process.env.GOOGLE_OAUTH_TEST_APP_URL,
       scope: ["email"]
     },
     (accessToken, refreshToken, profile, cb) => {
@@ -70,7 +70,7 @@ app.get(
   (req, res) => {
     console.log("wooo we authenticated, here is our user object:", req.user);
     // res.json(req.user);
-    res.redirect("/");
+    res.redirect("/dashboard");
   }
 );
 
