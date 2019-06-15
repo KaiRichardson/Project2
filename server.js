@@ -69,8 +69,8 @@ app.get(
   passport.authenticate("google", { failureRedirect: "/", session: true }),
   (req, res) => {
     console.log("wooo we authenticated, here is our user object:", req.user);
-    res.json(req.user);
-    // res.redirect("/");
+    // res.json(req.user);
+    res.redirect("https://frozen-spire-30925.herokuapp.com/dashboard");
   }
 );
 
