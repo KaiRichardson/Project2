@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 $("#submit").on("click", function(event) {
   event.preventDefault();
   console.log(event);
