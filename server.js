@@ -2,7 +2,7 @@ require("dotenv").config();
 var path = require("path");
 var express = require("express");
 var passport = require("passport");
-var GoogleStrategy = require("passport-google-oauth20").Strategy;
+// var GoogleStrategy = require("passport-google-oauth20").Strategy;
 var session = require("express-session");
 
 var app = express();
@@ -41,24 +41,27 @@ var accessProtectionMiddleware = (req, res, next) => {
   }
 };
 
-// Set up passport strategy
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_SECRET,
-      callbackURL: 'https://frozen-spire-30925.herokuapp.com/auth/google/callback',
-      scope: ["email"]
-    },
-    (accessToken, refreshToken, profile, cb) => {
-      console.log(
-        "Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user:",
-        profile
-      );
-      return cb(null, profile);
-    }
-  )
-);
+// START GOOGS STUFF ----------------------------------------------------------------------/
+require("./config/passport-setup.js")(app);
+
+// // Set up passport strategy
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_ID,
+//       clientSecret: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_SECRET,
+//       callbackURL: 'https://frozen-spire-30925.herokuapp.com/auth/google/callback',
+//       scope: ["email"]
+//     },
+//     (accessToken, refreshToken, profile, cb) => {
+//       console.log(
+//         "Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user:",
+//         profile
+//       );
+//       return cb(null, profile);
+//     }
+//   )
+// );
 
 // Create API endpoints
 
