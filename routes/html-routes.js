@@ -19,4 +19,15 @@ module.exports = function(app) {
   app.get("*", function(req, res) {
     res.status("404");
   });
+
+  // Checks if a user is logged in
+  const accessProtectionMiddleware = (req, res, next) => {
+    if (req.isAuthenticated()) {
+      next();
+    } else {
+      res.status(403).json({
+        message: "must be logged in to continue"
+      });
+    }
+  };
 };

@@ -37,17 +37,6 @@ passport.deserializeUser((userDataFromCookie, done) => {
 require("./routes/student-api-routes")(app);
 require("./routes/html-routes")(app);
 
-// Checks if a user is logged in
-const accessProtectionMiddleware = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(403).json({
-      message: "must be logged in to continue"
-    });
-  }
-};
-
 // Set up passport strategy
 passport.use(
   new GoogleStrategy(
