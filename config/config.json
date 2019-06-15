@@ -1,7 +1,6 @@
 {
   "development": {
     "username": "root",
-    "password": "yourRootPassword",
     "database": "student_db",
     "host": "localhost",
     "dialect": "mysql"
