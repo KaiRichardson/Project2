@@ -24,7 +24,7 @@ module.exports = function(app) {
       //     .then(isUnique => isUnique);
 
       console.log("wooo we authenticated, here is our user object:", req.user);
-      res.json(req.user);
+      res.json(req.user._json);
       // res.redirect("https://frozen-spire-30925.herokuapp.com/dashboard");
     }
   );
