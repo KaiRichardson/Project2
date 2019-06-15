@@ -9,12 +9,14 @@ const config = require(__dirname + "/../config/config.json")[env];
 const db = {};
 
 if (config.use_env_variable) {
-  const sequelize = new Sequelize(process.env[config.use_env_variable]);
+  var sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {
-  const sequelize = new Sequelize('database', 'username', 'password', {
-    host: 'localhost',
-    dialect: "mysql",
-  });
+  var sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+  );
 }
 
 fs.readdirSync(__dirname)
@@ -24,7 +26,7 @@ fs.readdirSync(__dirname)
     );
   })
   .forEach(function(file) {
-    const model = sequelize["import"](path.join(__dirname, file));
+    var model = sequelize["import"](path.join(__dirname, file));
     db[model.name] = model;
   });
 
