@@ -11,7 +11,9 @@ const config = require(path.join(__dirname, "..", "config", "config.json"))[
 const db = {};
 if (config.use_env_variable) {
   var sequelize = new Sequelize(process.env[config.use_env_variable]);
+  console.log("-------------use_env_variable--------");
 } else {
+  console.log("-------------use_Sequelize_variable--------");
   var sequelize = new Sequelize(
     config.database,
     config.username,
@@ -19,6 +21,7 @@ if (config.use_env_variable) {
     config
   );
 }
+
 fs.readdirSync(__dirname)
   .filter(function(file) {
     return file.indexOf(".") !== 0 && file !== "index.js";
