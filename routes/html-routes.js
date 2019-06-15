@@ -1,4 +1,5 @@
 var path = require("path");
+var server = require("../server");
 
 module.exports = function(app) {
   // Load index page
@@ -11,7 +12,7 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "./public/newUser.html"));
   });
 
-  app.get("/dashboard", accessProtectionMiddleware, function(req, res) {
+  app.get("/dashboard", server.accessProtectionMiddleware, function(req, res) {
     res.sendFile(path.join(__dirname, "./public/dashboard.html"));
   });
 
@@ -19,15 +20,4 @@ module.exports = function(app) {
   app.get("*", function(req, res) {
     res.status("404");
   });
-
-  // Checks if a user is logged in
-  const accessProtectionMiddleware = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      next();
-    } else {
-      res.status(403).json({
-        message: "must be logged in to continue"
-      });
-    }
-  };
 };
