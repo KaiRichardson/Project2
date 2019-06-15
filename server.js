@@ -11,7 +11,7 @@ var port = process.env.PORT || 8050;
 app.use(express.static(__dirname + "/public"));
 
 // Routs
-require("./routes/html-routes")(app);
+// require("./routes/html-routes")(app);
 
 // Google Routs
 require("./config/passport-setup.js")(app);
@@ -28,14 +28,14 @@ require("./routes/googleRoutes/auth-routes.js")(app);
 //   }
 // };
 
-// // Load index page
-// app.get("/", function(req, res) {
-//   res.sendFile(path.join(__dirname, "./public/login.html"));
-// });
+// Load index page
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "./public/login.html"));
+});
 
-// app.get("/dashboard", (req, res) => {
-//   res.sendFile(path.join(__dirname, "./public/dashboard.html"));
-// });
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(__dirname, "./public/dashboard.html"));
+});
 
 var syncOptions = { force: false };
 
