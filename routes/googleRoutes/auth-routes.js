@@ -18,10 +18,14 @@ module.exports = function(app) {
     }),
     (req, res) => {
       var studentGoogObj = req.user._json;
-      console.log("wooo we authenticated, here is our user object:", req.user);
-      // res.json(req.user._json);
-
-      res.redirect("https://frozen-spire-30925.herokuapp.com/dashboard");
+      // console.log("wooo we authenticated, here is our user object:", req.user);
+      res.json(req.user._json);
+// if (condition) {
+  
+// } else {
+  
+// }
+      // res.redirect("https://frozen-spire-30925.herokuapp.com/dashboard");
     }
   );
 };
