@@ -1,9 +1,6 @@
 require("dotenv").config();
 var express = require("express");
-var passport = require("passport");
-var GoogleStrategy = require("passport-google-oauth20").Strategy;
 var session = require("express-session");
-var path = require("path");
 
 // local
 var db = require("./models");
@@ -41,22 +38,11 @@ if (process.env.NODE_ENV === "test") {
   syncOptions.force = true;
 }
 
-// Create API endpoints
-// This is where users point their browsers in order to get logged in
-// This is also where Google sends back information to our app once a user authenticates with Google
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/", session: true }),
-  (req, res) => {
-    console.log(`wooo we authenticated, here is our user object: ${req.user}`);
-    // res.json(req.user);
-    res.redirect("/");
-  }
-);
-
-// Starting the server, syncing our models ------------------------------------/
-var server = app.listen(port, function() {  
-  console.log('Server listening on port ' + port);
+// Starting the server
+db.sequelize.sync({ force: true }).then(function() {
+  app.listen(port, function() {
+    console.log("App listening on PORT " + port);
+  });
 });
 
 module.exports = app;

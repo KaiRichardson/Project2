@@ -1,8 +1,8 @@
 -- Drops the student_db if it exists currently --
-DROP DATABASE IF EXISTS student_test_db;
+DROP DATABASE IF EXISTS student_db;
 
 -- Creates the "student_db" database --
-CREATE DATABASE student_test_db;
+CREATE DATABASE student_db;
 
 -- Definitions
 -- ed_level = education level. for our app we should use the most common ones

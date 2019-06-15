@@ -13,6 +13,8 @@ module.exports = function(app) {
     res.send("logging out");
   });
 
+  // This is where users point their browsers in order to get logged in
+// This is also where Google sends back information to our app once a user authenticates with Google
   app.get(
     "/auth/google/callback",
     passport.authenticate("google", { failureRedirect: "/", session: true }),
