@@ -7,9 +7,9 @@ var config = require(__dirname + "/../config/config.json")[env];
 require("dotenv").config();
 var db = {};
 
-// if (config.use_env_variable) {
-//   var sequelize = new Sequelize(process.env[config.use_env_variable]);
-// } else {
+if (config.use_env_variable) {
+  var sequelize = new Sequelize(process.env[config.use_env_variable]);
+} else {
   var sequelize = new Sequelize(
     config.database,
     config.username,
@@ -18,7 +18,7 @@ var db = {};
       host: 'localhost',
       dialect: "mysql"
     });
-// }
+}
 
 fs.readdirSync(__dirname)
   .filter(function(file) {
