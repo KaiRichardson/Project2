@@ -22,10 +22,10 @@ app.use(
     saveUninitialized: false
   })
 );
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Add passport support
+app.use(passport.initialize());
+app.use(passport.session());
 passport.serializeUser((user, done) => {
   done(null, user);
 });
@@ -56,20 +56,18 @@ passport.use(
       clientSecret: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_SECRET,
       callbackURL:
         "https://frozen-spire-30925.herokuapp.com/auth/google/callback",
-      scope: ["profile"]
+      scope: ["email"]
     },
     (accessToken, refreshToken, profile, cb) => {
-      console.log(`Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user ${profile}`);
+      console.log(
+        `Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user ${profile}`
+      );
       return cb(null, profile);
     }
   )
 );
 
 // Create API endpoints
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "/public/login.html"));
-});
-
 // This is where users point their browsers in order to get logged in
 // This is also where Google sends back information to our app once a user authenticates with Google
 app.get(
@@ -78,16 +76,9 @@ app.get(
   (req, res) => {
     console.log(`wooo we authenticated, here is our user object: ${req.user}`);
     // res.json(req.user);
-    res.redirect("/dashboard");
+    res.redirect("/");
   }
 );
-
-app.get("/dashboard", accessProtectionMiddleware, (req, res) => {
-  res.json({
-    message: "You have accessed the protected endpoint!",
-    yourUserInfo: req.user
-  });
-});
 
 // Start server
 const server = app.listen(port, function() {
