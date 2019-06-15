@@ -1,5 +1,5 @@
 var passport = require("passport");
-var db = require("./models");
+var db = require("../../models");
 
 // console.log("google auth routes");
 
@@ -27,7 +27,7 @@ module.exports = function(app) {
       //look up in db user google = req.user._json.sub
       db.Students.findOne({
         where: {
-          googleId: req.user._json.sub
+          googleId: studentGoogObj
         }
       }).then(function(dbStudent) {
         //if user does not exists send to newuser
