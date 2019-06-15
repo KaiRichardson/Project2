@@ -1,5 +1,7 @@
 var passport = require("passport");
-console.log("google auth routes");
+var db = require("./models");
+
+// console.log("google auth routes");
 
 module.exports = function(app) {
   app.get("/auth/logout", function(req, res) {
@@ -21,13 +23,25 @@ module.exports = function(app) {
       // console.log("wooo we authenticated, here is our user object:", req.user);
       res.json(req.user);
       console.log(req.user);
+
+      //look up in db user google = req.user._json.sub
+      db.Students.findOne({
+        where: {
+          googleId: req.user._json.sub
+        }
+      }).then(function(dbStudent) {
+        //if user does not exists send to newuser
+        if (dbStudent) {
+          res.redirect("https://frozen-spire-30925.herokuapp.com/dashboard");
+          //if user exists send to dashboard
+        } else {
+          res.redirect("https://frozen-spire-30925.herokuapp.com/newUser");
+        }
+        console.log(dbStudent);
+        res.json(dbStudent);
+      });
+  
       
-// if (condition) {
-  
-// } else {
-  
-// }
-      // res.redirect("https://frozen-spire-30925.herokuapp.com/dashboard");
     }
   );
 };
