@@ -34,10 +34,10 @@ module.exports = function(app) {
         scope: ["email"]
       },
       (accessToken, refreshToken, profile, cb) => {
-        console.log(
-          "Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user:",
-          profile
-        );
+        // console.log(
+        //   "Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user:",
+        //   profile
+        // );
         return cb(null, profile);
       }
     )
