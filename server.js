@@ -1,8 +1,11 @@
 require("dotenv").config();
+var passport = require("passport");
+cookieParser = require("cookie-parser");
+cookieSession = require("cookie-session");
 // var path = require("path");
 var express = require("express");
-
 var db = require("./models");
+
 
 var app = express();
 var port = process.env.PORT || 8050;
@@ -10,12 +13,19 @@ var port = process.env.PORT || 8050;
 // Serve static files
 app.use(express.static("public"));
 
-// Google Routs
+app.use(cookieSession({
+  name: "session",
+  keys: ["123"]
+}));
+app.use(cookieParser());
+
+
+// Google Routes
 require("./config/passport-setup.js")(app);
 require("./routes/googleRoutes/auth-routes.js")(app);
 
 // Routes
-// require("./routes/student-api-routes.js")(app);
+require("./routes/student-api-routes.js")(app);
 require("./routes/html-routes.js")(app);
 
 // Checks if a user is logged in
@@ -28,16 +38,6 @@ require("./routes/html-routes.js")(app);
 //     });
 //   }
 // };
-
-// Load index page
-// app.get("/", function(req, res) {
-// console.log("server '/'");
-//   res.sendFile(path.join(__dirname, "./public/login.html"));
-// });
-
-// app.get("/dashboard", (req, res) => {
-//   res.sendFile(path.join(__dirname, "./public/dashboard.html"));
-// });
 
 var syncOptions = { force: false };
 

@@ -1,11 +1,16 @@
 /* var moment = require("moment"); */
 
+var x = document.cookie;
+
+console.log(x);
+
 //pull data from db and display in our stuInfo container
 $.ajax({
-  url: "api/students/2", //pull this id from the database
+  url: "api/students/6", //pull this id from the database
   type: "GET"
 }).then(function(res) {
   console.log(res);
+  $("#firstNameDisplay").append(res.firstname);
   $("#schoolNameDisplay").append(res.school_name);
   $("#edLvlDisplay").append(res.ed_level);
   $("#majorDisplay").append(res.cip_code_one);

@@ -35,7 +35,7 @@
         <form action="/action_page.php">
           <div id="page">
 
-            
+            <div id="errors"></div>
             <div class="row" id="leftSide">
               <div class="col-6">
 
@@ -43,31 +43,31 @@
                   <label for="lastName">Last Name</label>
                   <i class="far fa-question-circle help" data-toggle="modal" data-target="#modalLastName"></i>
                   <input type="text" class="form-control newUserInfo" id="lastName" placeholder="Smith"
-                    onfocus="this.placeholder = ''">
+                    onfocus="this.placeholder = ''" dataname="Last Name">
                 </div>
 
                 <div class="form-group left">
                   <label for="email">Email address</label>
                   <input type="email" class="form-control newUserInfo" id="email" placeholder="name@example.com"
-                    onfocus="this.placeholder = ''">
+                    onfocus="this.placeholder = ''" dataname="Email Address">
                 </div>
 
                 <div class="form-group right">
                   <label for="schoolName">School Name</label>
                   <input type="text" class="form-control newUserInfo" id="schoolName"
-                    placeholder="Unversity of Washington" onfocus="this.placeholder = ''">
+                    placeholder="University of Washington" onfocus="this.placeholder = ''">
                 </div>
 
                 <div class="form-group left">
                   <label for="startDate">Program Start Date</label>
                   <i class="far fa-question-circle help" data-toggle="modal" data-target="#modalStartDate"></i>
-                  <input type="date" class="form-control newUserInfo" id="startDate">
+                  <input type="date" class="form-control newUserInfo" id="startDate" dataname="Program Start Date">
                 </div>
 
                 <div class="form-group left">
                   <label for="edLvl">Education Level</label>
                   <i class="far fa-question-circle help" data-toggle="modal" data-target="#modalEdLvl"></i>
-                  <select class="form-control newUserInfo" id="edLvl">
+                  <select class="form-control newUserInfo" id="edLvl" dataname="Education Level">
                     <option selected>Select One</option>
                     <option value="languageTraning">Language Training</option>
                     <option value="associates">Associate's</option>
@@ -86,18 +86,17 @@
                   <label for="firstName">First Name</label>
                   <i class="far fa-question-circle help" data-toggle="modal" data-target="#modalFirstName"></i>
                   <input type="text" class="form-control newUserInfo" id="firstName" placeholder="John"
-                    onfocus="this.placeholder = ''">
+                    onfocus="this.placeholder = ''" dataname="First Name">
                 </div>
 
                 <div class="form-group right">
                   <label for="phone">Phone Number</label>
-                  <input type="text" class="form-control newUserInfo" id="phone" placeholder="1-555-555-5555"
-                    onfocus="this.placeholder = ''">
-                </div>
-
+                  <input type="text" class="form-control newUserInfo" id="phone" placeholder="2065556666"
+                    onfocus="this.placeholder = ''" dataname="Phone Number">
+                  
                 <div class="form-group left">
                   <label for="termType">Academic Term</label>
-                  <select class="form-control newUserInfo" id="termType">
+                  <select class="form-control newUserInfo" id="termType" dataname="Academic Term Type">
                     <option selected>Select One</option>
                     <option value="quarter">Quarter</option>
                     <option value="semester">Semester</option>
@@ -107,26 +106,28 @@
                 <div class="form-group">
                   <label for="endDate">Program End Date</label>
                   <i class="far fa-question-circle help" data-toggle="modal" data-target="#modalEndDate"></i>
-                  <input type="date" class="form-control newUserInfo" id="endDate">
+                  <input type="date" class="form-control newUserInfo" id="endDate" dataname="Program End Date">
                 </div>
 
                 <div class="form-group">
                   <label for="cipCode">Major Code</label>
                   <i class="far fa-question-circle help" data-toggle="modal" data-target="#modalCipCode"></i>
-                  <input type="text" class="form-control newUserInfo" id="cipCode" placeholder="09.0101"
-                    onfocus="this.placeholder = ''">
+                  <input type="number" class="form-control newUserInfo" id="cipCode" placeholder="09.0101"
+                    onfocus="this.placeholder = ''" dataname="CIP Code">
                 </div>
 
               </div>
             </div>
           </div>
 
-        </form>
-        <div class="d-flex justify-content-center">
-          <button type="submit" id="submit" class="btn btn-primary userSubmit">Submit</button>
-        </div>
+        </form>            
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <button type="submit" id="submit" class="btn btn-primary userSubmit">Submit</button>
       </div>
     </div>
+  </div>
 
   <footer>
     <div class="d-flex justify-content-center copyright">

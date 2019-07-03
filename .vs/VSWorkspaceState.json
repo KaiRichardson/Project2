@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\public",
+    "\\routes",
+    "\\routes\\googleRoutes"
+  ],
+  "SelectedNode": "\\routes\\googleRoutes\\auth-routes.js",
+  "PreviewInSolutionExplorer": false
+}
